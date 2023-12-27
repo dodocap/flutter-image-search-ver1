@@ -24,7 +24,7 @@ class _MainScreenState extends State<MainScreen> {
 
     _imageItems.clear();
     for(int i=0; i<30; i++){
-      _imageItems.add('Dummy Data $i');
+      _imageItems.add("https://cdn.pixabay.com/photo/2015/04/23/21/59/tree-736877_150.jpg");
     }
 
     setState(() {
@@ -77,7 +77,13 @@ class _MainScreenState extends State<MainScreen> {
                         itemCount: _imageItems.length,
                         itemBuilder: (context, index) {
                           final imageItem = _imageItems[index];
-                          return Text(imageItem);
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(20.0),
+                            child: Image.network(
+                                imageItem,
+                                fit: BoxFit.cover,
+                            ),
+                          );
                         },
                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
