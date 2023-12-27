@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:orm_image_search_ver1/data/model/image_item_model.dart';
+import 'package:orm_image_search_ver1/data/repository/image_item_repository.dart';
 import 'package:orm_image_search_ver1/presenter/widget/image_item_widget.dart';
 
 class MainScreen extends StatefulWidget {
@@ -10,23 +12,16 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   final TextEditingController _searchTextController = TextEditingController();
-  bool _isLoading = true;
-  List<String> _imageItems = [];
+  final ImageItemRepository _repository = PixabayImageItemRepository();
+  bool _isLoading = false;
+  List<ImageItemModel> _imageItems = [];
 
-  @override
-  void initState() {
-    _loadImage();
+  Future<void> _loadImage(String query) async {
+    setState(() {
+      _isLoading = true;
+    });
 
-    super.initState();
-  }
-
-  Future<void> _loadImage() async {
-    await Future.delayed(Duration(seconds: 1));
-
-    _imageItems.clear();
-    for (int i = 0; i < 30; i++) {
-      _imageItems.add("https://cdn.pixabay.com/photo/2015/04/23/21/59/tree-736877_150.jpg");
-    }
+    _imageItems = await _repository.getImageItems(query);
 
     setState(() {
       _isLoading = false;
@@ -65,7 +60,7 @@ class _MainScreenState extends State<MainScreen> {
                       color: Color(0xFF4FB6B2),
                     ),
                     onPressed: () {
-                      print('Search Image');
+                      _loadImage(_searchTextController.text);
                     },
                   ),
                 ),
@@ -77,8 +72,8 @@ class _MainScreenState extends State<MainScreen> {
                       child: GridView.builder(
                         itemCount: _imageItems.length,
                         itemBuilder: (context, index) {
-                          final String imageItem = _imageItems[index];
-                          return ImageItemWidget(imageItem: imageItem);
+                          final ImageItemModel imageItem = _imageItems[index];
+                          return ImageItemWidget(imageItem: imageItem.imageUrl);
                         },
                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
