@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orm_image_search_ver1/presenter/widget/image_item_widget.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -23,7 +24,7 @@ class _MainScreenState extends State<MainScreen> {
     await Future.delayed(Duration(seconds: 1));
 
     _imageItems.clear();
-    for(int i=0; i<30; i++){
+    for (int i = 0; i < 30; i++) {
       _imageItems.add("https://cdn.pixabay.com/photo/2015/04/23/21/59/tree-736877_150.jpg");
     }
 
@@ -76,14 +77,8 @@ class _MainScreenState extends State<MainScreen> {
                       child: GridView.builder(
                         itemCount: _imageItems.length,
                         itemBuilder: (context, index) {
-                          final imageItem = _imageItems[index];
-                          return ClipRRect(
-                            borderRadius: BorderRadius.circular(20.0),
-                            child: Image.network(
-                                imageItem,
-                                fit: BoxFit.cover,
-                            ),
-                          );
+                          final String imageItem = _imageItems[index];
+                          return ImageItemWidget(imageItem: imageItem);
                         },
                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
