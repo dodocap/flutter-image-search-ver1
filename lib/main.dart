@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orm_image_search_ver1/presenter/main_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+      home: const MainScreen(),
     );
   }
 }
