@@ -73,7 +73,7 @@ class _MainScreenState extends State<MainScreen> {
                         itemCount: _imageItems.length,
                         itemBuilder: (context, index) {
                           final ImageItemModel imageItem = _imageItems[index];
-                          return ImageItemWidget(imageItem: imageItem.imageUrl);
+                          return ImageItemWidget(imageItem: imageItem);
                         },
                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
