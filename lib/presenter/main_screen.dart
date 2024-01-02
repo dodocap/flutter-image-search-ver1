@@ -15,6 +15,12 @@ class _MainScreenState extends State<MainScreen> {
   final TextEditingController _searchTextController = TextEditingController();
 
   @override
+  void dispose() {
+    _searchTextController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<MainViewModel>();
     return Scaffold(
