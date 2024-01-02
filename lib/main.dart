@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orm_image_search_ver1/presenter/main_screen.dart';
+import 'package:orm_image_search_ver1/presenter/main_view_model.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -8,7 +10,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,7 +18,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MainScreen(),
+      home: ChangeNotifierProvider(
+      create: (_) => MainViewModel(),
+      child: const MainScreen()),
     );
   }
 }
