@@ -53,7 +53,7 @@ class _MainScreenState extends State<MainScreen> {
                       color: Color(0xFF4FB6B2),
                     ),
                     onPressed: () {
-                      viewModel.loadImage(_searchTextController.text);
+                      context.read<MainViewModel>().loadImage(_searchTextController.text);
                     },
                   ),
                 ),
