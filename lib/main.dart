@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:orm_image_search_ver1/di/di_setup.dart';
 import 'package:orm_image_search_ver1/presenter/router/routes.dart';
 
 void main() {
+  diSetup();
   runApp(const MyApp());
 }
 
