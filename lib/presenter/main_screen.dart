@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:orm_image_search_ver1/core/ui_event.dart';
 import 'package:orm_image_search_ver1/data/model/image_item_model.dart';
 import 'package:orm_image_search_ver1/presenter/main_view_model.dart';
 import 'package:orm_image_search_ver1/presenter/widget/image_item_widget.dart';
@@ -13,9 +16,46 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   final TextEditingController _searchTextController = TextEditingController();
+  StreamSubscription? _uiEventSubscription;
+
+  @override
+  void initState() {
+    Future.microtask(() {
+      final viewModel = context.read<MainViewModel>();
+      _uiEventSubscription = viewModel.eventStream.listen((event) {
+        switch (event) {
+          case ShowSnackBar():
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(event.e)));
+          case ShowDialog():
+            _showSimpleDialog(event.e);
+        }
+      });
+    });
+    super.initState();
+  }
+
+  void _showSimpleDialog(String msg) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(msg),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('확인'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   void dispose() {
+    _uiEventSubscription?.cancel();
     _searchTextController.dispose();
     super.dispose();
   }
