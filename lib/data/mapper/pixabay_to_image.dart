@@ -1,5 +1,5 @@
 import 'package:orm_image_search_ver1/data/dto/pixabay_dto.dart';
-import 'package:orm_image_search_ver1/data/model/image_item_model.dart';
+import 'package:orm_image_search_ver1/domain/model/image_item_model.dart';
 
 extension PixabayToImageMappger on Hits {
   ImageItemModel mapper() {

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:orm_image_search_ver1/core/ui_event.dart';
-import 'package:orm_image_search_ver1/data/model/image_item_model.dart';
+import 'package:orm_image_search_ver1/domain/model/image_item_model.dart';
 import 'package:orm_image_search_ver1/presenter/main_view_model.dart';
 import 'package:orm_image_search_ver1/presenter/widget/image_item_widget.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +20,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void initState() {
+    super.initState();
     Future.microtask(() {
       final viewModel = context.read<MainViewModel>();
       _uiEventSubscription = viewModel.eventStream.listen((event) {
@@ -31,7 +32,6 @@ class _MainScreenState extends State<MainScreen> {
         }
       });
     });
-    super.initState();
   }
 
   void _showSimpleDialog(String msg) {

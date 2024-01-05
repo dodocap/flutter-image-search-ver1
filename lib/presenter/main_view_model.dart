@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:orm_image_search_ver1/core/constants.dart';
 import 'package:orm_image_search_ver1/core/result.dart';
 import 'package:orm_image_search_ver1/core/ui_event.dart';
-import 'package:orm_image_search_ver1/data/model/image_item_model.dart';
-import 'package:orm_image_search_ver1/data/repository/image_item_repository.dart';
+import 'package:orm_image_search_ver1/domain/model/image_item_model.dart';
+import 'package:orm_image_search_ver1/domain/use_case/query_image_use_case.dart';
 import 'package:orm_image_search_ver1/presenter/main_state.dart';
 
 class MainViewModel extends ChangeNotifier {
-  final ImageItemRepository _repository;
+  final QueryImageUseCase _queryImageUseCase;
 
-  MainViewModel({required ImageItemRepository repository}) : _repository = repository;
+  MainViewModel({required QueryImageUseCase queryImageUseCase}) : _queryImageUseCase = queryImageUseCase;
 
   MainState _state = const MainState();
   MainState get state => _state;
@@ -28,7 +28,7 @@ class MainViewModel extends ChangeNotifier {
     _state = _state.copyWith(isLoading: true);
     notifyListeners();
 
-    final Result<List<ImageItemModel>> resultList = await _repository.getImageItems(query);
+    final Result<List<ImageItemModel>> resultList = await _queryImageUseCase.execute(query);
     resultList.when(
       success: (data) {
         _state = _state.copyWith(isLoading: false, imageItems: data);
